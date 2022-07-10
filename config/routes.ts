@@ -1,19 +1,5 @@
 ﻿export default [
   {
-    path: '/user',
-    layout: false,
-    routes: [
-      {
-        name: 'login',
-        path: '/user/login',
-        component: './user/Login',
-      },
-      {
-        component: './404',
-      },
-    ],
-  },
-  {
     path: '/welcome',
     name: 'welcome',
     icon: 'smile',
@@ -38,10 +24,16 @@
     ],
   },
   {
-    name: 'list.table-list',
+    path: '/supplier',
+    name: '供应商',
+    icon: 'table',
+    component: './supplier/list'
+  },
+  {
+    name: '用户列表',
     icon: 'table',
     path: '/list',
-    component: './TableList',
+    component: '@/pages/user/list',
   },
   {
     path: '/',
