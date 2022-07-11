@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import { Table } from 'antd';
-import { getUserList } from './service';
+import { Table, Popconfirm } from 'antd';
+import { getUserList, deleteUser } from './service';
 import { PAGINATION } from './constants';
 import type { TablePaginationConfig } from 'antd/lib/table/Table';
 import styles from './index.less';
@@ -11,6 +11,26 @@ const SupplierList: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [supplier, setSupplier] = useState([]);
   const [pagination, setPagination] = useState<TablePaginationConfig>(PAGINATION);
+
+  const handleConfirm = async (id: string) => {
+    const res = await deleteUser({ id });
+    console.log('res', res);
+  };
+
+  const handleChange = (page: TablePaginationConfig) => {
+    setPagination({ ...pagination, current: page?.current, pageSize: page?.pageSize });
+  };
+
+  const fetchUserList = async () => {
+    setLoading(true);
+    const { current, pageSize } = pagination;
+    const res = await getUserList({ pageIndex: current, pageSize });
+    if (res?.success) {
+      setLoading(false);
+      setTotal(res?.total);
+      setSupplier(res?.data);
+    }
+  };
 
   const columns = [
     {
@@ -44,26 +64,20 @@ const SupplierList: React.FC = () => {
       title: '操作',
       dataIndex: 'operation',
       key: 'operation',
-      render: () => {
-        return <a role="button">删除</a>;
+      render: (_: string, record: any) => {
+        return (
+          <Popconfirm
+            onConfirm={() => handleConfirm(record?.id)}
+            title="您确定要删除吗？"
+            okText="确定"
+            cancelText="取消"
+          >
+            <a role="button">删除</a>
+          </Popconfirm>
+        );
       },
     },
   ];
-
-  const handleChange = (page: TablePaginationConfig) => {
-    setPagination({ ...pagination, current: page?.current, pageSize: page?.pageSize });
-  };
-
-  const fetchUserList = async () => {
-    setLoading(true);
-    const { current, pageSize } = pagination;
-    const res = await getUserList({ pageIndex: current, pageSize });
-    if (res?.success) {
-      setLoading(false);
-      setTotal(res?.total);
-      setSupplier(res?.data);
-    }
-  };
 
   useEffect(() => {
     fetchUserList();

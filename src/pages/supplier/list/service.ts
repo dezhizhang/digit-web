@@ -7,3 +7,11 @@ export async function getUserList(params: any): Promise<any> {
         params
     });
 }
+
+// 删除供应商
+export async function deleteUser(params: any): Promise<any> {
+    return request(`/user/delete`, {
+        method: 'DELETE',
+        data: params
+    })
+}
