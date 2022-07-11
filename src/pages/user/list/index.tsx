@@ -1,12 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import moment from 'moment';
 import React, { useState, useEffect, useRef } from 'react';
 import type { MutableRefObject } from 'react';
-import { Table, Popconfirm, Button } from 'antd';
-import styles from './index.less';
+import { Table, Popconfirm, Button, message } from 'antd';
 import { PAGINATION } from './constant';
+import type { UserType } from './typing';
 import UserDrawer from './components/UserDrawer';
-import { getUserList, deleteUser } from './service';
+import { getUserList, deleteUser, oneAddUser } from './service';
 import type { TablePaginationConfig } from 'antd/lib/table/Table';
+import styles from './index.less';
 
 const UserList: React.FC = () => {
   const userRef = useRef<MutableRefObject<undefined>>(null);
@@ -33,6 +35,13 @@ const UserList: React.FC = () => {
       setLoading(false);
       setTotal(res?.total);
       setUsers(res?.data);
+    }
+  };
+  const handleinish = async (values: UserType) => {
+    values.birthday = moment(values.birthday).valueOf();
+    const res = await oneAddUser(values);
+    if (res?.success) {
+      message.success('添加用户成功');
     }
   };
 
@@ -113,6 +122,7 @@ const UserList: React.FC = () => {
       <UserDrawer
         //@ts-ignore
         ref={userRef}
+        onFinish={handleinish}
       />
     </div>
   );
