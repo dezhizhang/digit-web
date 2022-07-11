@@ -42,6 +42,8 @@ const UserList: React.FC = () => {
     const res = await oneAddUser(values);
     if (res?.success) {
       message.success('添加用户成功');
+      (userRef as any).current.close();
+      setPagination({ ...pagination, current: 1, pageSize: 10 });
     }
   };
 
