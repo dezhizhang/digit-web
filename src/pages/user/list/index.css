@@ -3,5 +3,9 @@
 }
 .container .wrapper {
   padding: 24px;
-  background: #FFFFFF;
+  background: #ffffff;
+}
+.container .wrapper .table .btns {
+  margin-bottom: 16px;
+  text-align: right;
 }

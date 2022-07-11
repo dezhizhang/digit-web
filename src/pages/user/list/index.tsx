@@ -1,12 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
-import { Table, Popconfirm } from 'antd';
+import React, { useState, useEffect, useRef } from 'react';
+import type { MutableRefObject } from 'react';
+import { Table, Popconfirm, Button } from 'antd';
 import styles from './index.less';
 import { PAGINATION } from './constant';
+import UserDrawer from './components/UserDrawer';
 import { getUserList, deleteUser } from './service';
 import type { TablePaginationConfig } from 'antd/lib/table/Table';
 
 const UserList: React.FC = () => {
+  const userRef = useRef<MutableRefObject<undefined>>(null);
   const [users, setUsers] = useState([]);
   const [total, setTotal] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
@@ -31,6 +34,10 @@ const UserList: React.FC = () => {
       setTotal(res?.total);
       setUsers(res?.data);
     }
+  };
+
+  const handleUser = () => {
+    (userRef as MutableRefObject<any>).current.show();
   };
 
   const columns = [
@@ -87,15 +94,26 @@ const UserList: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <Table
-          pagination={{ ...pagination, total }}
-          bordered
-          onChange={handleChange}
-          loading={loading}
-          dataSource={users}
-          columns={columns}
-        />
+        <div className={styles.table}>
+          <div className={styles.btns}>
+            <Button type="primary" onClick={handleUser}>
+              添加用户
+            </Button>
+          </div>
+          <Table
+            pagination={{ ...pagination, total }}
+            bordered
+            onChange={handleChange}
+            loading={loading}
+            dataSource={users}
+            columns={columns}
+          />
+        </div>
       </div>
+      <UserDrawer
+        //@ts-ignore
+        ref={userRef}
+      />
     </div>
   );
 };
