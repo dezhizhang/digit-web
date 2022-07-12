@@ -10,9 +10,8 @@ export async function getUserList(params: any): Promise<any> {
 
 // 删除供应商
 export async function deleteUser(params: any): Promise<any> {
-    return request(`/user/delete`, {
+    return request(`/user/delete/${params.id}`, {
         method: 'DELETE',
-        data: params
     })
 }
 
