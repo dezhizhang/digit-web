@@ -64,7 +64,7 @@ const UserDrawer: React.FC<UserDrawerProps> = forwardRef((props, ref) => {
           <Input.Password placeholder="请输入密码" />
         </Form.Item>
         <Form.Item name="mobile" label="电话" rules={[{ required: true, message: '密码不能为空' }]}>
-          <Input.Password placeholder="请输入密码" />
+          <Input placeholder="请输入密码" />
         </Form.Item>
         <Form.Item name="gender" label="性别" rules={[{ required: true, message: '性别不能为空' }]}>
           <Select placeholder="请选择性别">

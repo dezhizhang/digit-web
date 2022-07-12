@@ -20,7 +20,9 @@ const UserList: React.FC = () => {
 
   const handleConfirm = async (id: string) => {
     const res = await deleteUser({ id });
-    console.log('res', res);
+    if (res?.success) {
+      setPagination({ ...pagination, current: 1, pageSize: 10 });
+    }
   };
 
   const handleChange = (page: TablePaginationConfig) => {
