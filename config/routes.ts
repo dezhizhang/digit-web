@@ -1,18 +1,38 @@
 ﻿export default [
   {
-    path: '/user/login',
-    component: './user/login',
-  },
-  {
-    path: '/user/register',
-    component: './user/',
+    path: '/user',
+    component: '@/layout/UserLayout',
+    hideChildrenInMenu: true,
+    wrappers: ['@/components/Wrappers/Auth'],
+    routes: [
+      {
+        path: '/user',
+        redirect: '/workbench',
+      },
+      {
+        path: '/user/login',
+        name: '登录页',
+        component: '@/pages/user/login',
+      },
+      {
+        path: '/user/register',
+        name: '注册页',
+        component: '@/pages/user/register'
+      }
+    ],
   },
   {
     path: '/',
+    component: '@/layout/BaseLayout',
+    wrappers: ['@/components/Wrappers/Auth'],
     routes: [
       {
-        path: '/welcome',
-        name: 'welcome',
+        path: '/',
+        redirect: '/workbench',
+      },
+      {
+        path: '/workbench',
+        name: '工作台',
         icon: 'smile',
         component: './Welcome',
       },
@@ -28,13 +48,10 @@
         icon: 'table',
         component: './supplier/list',
       },
+      {
+        component: './404',
+      },
     ],
   },
-  {
-    path: '/',
-    redirect: '/welcome',
-  },
-  {
-    component: './404',
-  },
+
 ];

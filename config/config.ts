@@ -1,3 +1,11 @@
+/*
+ * @Author: dezhizhang 1541609448@qq.com
+ * @Date: 2022-05-18 12:40:48
+ * @LastEditors: dezhizhang 1541609448@qq.com
+ * @LastEditTime: 2022-07-15 10:41:42
+ * @FilePath: /digit-web/config/config.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 // https://umijs.org/config/
 import { defineConfig } from 'umi';
 import defaultSettings from './defaultSettings';
@@ -12,12 +20,7 @@ export default defineConfig({
   dva: {
     hmr: true,
   },
-  layout: {
-    // https://umijs.org/zh-CN/plugins/plugin-layout
-    locale: true,
-    siderWidth: 208,
-    ...defaultSettings,
-  },
+  layout: false,
   // https://umijs.org/zh-CN/plugins/plugin-locale
   locale: {
     // default zh-CN
